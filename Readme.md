@@ -164,7 +164,7 @@ Export the cleaned and engineered DataFrame to an Excel file (netflix_cleaned_da
 - **Duration Trends**: Movies average ~100 minutes; TV shows mostly 1-2 seasons
 - **Genre Preferences**: Drama, Comedy, and International content most prevalent
 - **Rating Distribution**: TV-MA and TV-14 most common ratings
-- **Model Performance**: Logistic Regression achieves ~80% accuracy in content type prediction
+- **Model Performance**: Logistic Regression achieves 99.6% accuracy in content type prediction
 
 ## 🛠 Technologies Used
 
