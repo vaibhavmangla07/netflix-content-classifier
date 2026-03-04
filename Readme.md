@@ -26,11 +26,12 @@ This is a **comprehensive end-to-end data science project** that demonstrates a 
 Netflix Data Science Project/
 ├── main.ipynb                    # Complete analysis notebook (92 cells)
 ├── data/
-│   └── netflix_titles.csv        # Raw dataset (8,807 records)
-├── netflix_cleaned_data.xlsx     # Processed data export
-├── netflix_analysis.db           # SQLite database
+│   ├── netflix_titles.csv        # Raw dataset (8,807 records)
+│   └── netflix_cleaned_data.xlsx # Processed data export (2.3 MB)
+├── database/
+│   └── netflix_analysis.db       # SQLite database (3.9 MB)
 ├── README.md                     # Project overview
-├── Project_Report.pdf            # Detailed analysis report
+├── project_report.md             # Detailed analysis report
 └── requirements.txt              # Python dependencies
 ```
 

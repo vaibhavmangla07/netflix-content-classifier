@@ -116,8 +116,8 @@ AUC:       99.97%
 ## 5. Deliverables
 
 ✅ Complete analysis notebook (92 cells)  
-✅ Processed Excel export (2.3 MB)  
-✅ SQLite database (3.9 MB)  
+✅ Processed Excel export (2.3 MB) in data/ folder  
+✅ SQLite database (3.9 MB) in database/ folder  
 ✅ Comprehensive documentation  
 
 ---
