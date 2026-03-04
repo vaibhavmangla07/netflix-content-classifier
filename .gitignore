@@ -4,5 +4,3 @@ __pycache__/
 .ipynb_checkpoints/
 *.log
 *.tmp
-netflix_analysis.db
-netflix_cleaned_data.xlsx
