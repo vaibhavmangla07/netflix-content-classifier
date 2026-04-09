@@ -1,328 +1,144 @@
-# Netflix Movies & TV Shows – End-to-End Data Science Project
+# Netflix Content Classifier
 
-## 📊 Project Overview
+An end-to-end data science project for analyzing Netflix's catalog, engineering reusable features, persisting curated datasets, and training machine learning models to classify titles as either **Movie** or **TV Show**.
 
-This is a **comprehensive end-to-end data science project** that demonstrates a complete data science pipeline. The project analyzes Netflix's content library to extract actionable insights about content distribution, production trends, and builds a predictive machine learning model for content classification.
+## Executive Summary
 
-**Goal:** Demonstrate professional data science skills from raw data to production-ready models.
+This project turns the public Netflix titles dataset into a reproducible analytics and machine learning pipeline. It covers the full workflow from raw ingestion through cleaning, feature engineering, exploratory analysis, database persistence, and model training.
 
----
+The repository is notebook-first, but the artifacts are organized so the outputs are reusable outside the notebooks as well. Cleaned data, feature-engineered data, evaluation plots, and serialized models are all committed for review and downstream use.
 
-## 🎯 Project Objectives
+## What This Project Demonstrates
 
-✅ Perform thorough data inspection and quality assessment  
-✅ Implement robust data cleaning and preprocessing  
-✅ Engineer meaningful features for enhanced analysis  
-✅ Conduct exploratory data analysis (EDA) with visualizations  
-✅ Build an ML model for content type prediction  
-✅ Integrate data with database systems  
-✅ Export clean data for dashboard creation  
+- Data inspection and quality assessment on a real-world catalog dataset.
+- Non-destructive cleaning and standardization of text, date, and categorical fields.
+- Feature engineering for both analysis and prediction tasks.
+- Exploratory data analysis with trend, distribution, and category-level views.
+- SQLite integration for relational querying and persistence.
+- Model comparison across multiple classifier families.
+- Artifact export for reproducibility and portfolio presentation.
 
----
+## Dataset
 
-## 📁 Project Structure
+The raw dataset contains Netflix titles with metadata such as release year, date added, rating, duration, country, cast, director, and description.
 
-```
-Netflix Data Science Project/
-├── main.ipynb                    # Complete analysis notebook (92 cells)
-├── data/
-│   ├── netflix_titles.csv        # Raw dataset (8,807 records)
-│   └── netflix_cleaned_data.xlsx # Processed data export (2.3 MB)
-├── database/
-│   └── netflix_analysis.db       # SQLite database (3.9 MB)
-├── README.md                     # Project overview
-├── project_report.md             # Detailed analysis report
-└── requirements.txt              # Python dependencies
-```
+The project is organized into a bronze-silver-gold data flow:
 
----
+- Bronze: `data/bronze/netflix_titles.csv`
+- Silver: `data/silver/Silver_Cleaned_Netflix_Data.csv`
+- Gold: `data/gold/Netflix_Featured_Scaled_Data.csv`
 
-## 🚀 10-Step Data Science Pipeline
+The processed dataset is also stored in `database/netflix.db` for SQL-based analysis.
 
-### 1️⃣ **Install & Import Libraries**
-- Upgrade pip and install dependencies
-- Import pandas, numpy, matplotlib, seaborn, scikit-learn
+## Methodology
 
-### 2️⃣ **Load Dataset**
-- Load Netflix titles CSV: **8,807 rows × 12 columns**
-- Data types: Primarily categorical with numeric release_year
+### 1. Data Inspection and Cleaning
 
-### 3️⃣ **Data Inspection**
-- Head/tail analysis
-- Shape and size verification
-- Missing value detection: **31,427 nulls identified**
-- Duplicate check: **0 duplicates**
-- Statistical summary
+The first notebook standardizes column names, checks duplicates, inspects missing values, and converts date fields into analysis-friendly types. Cleaning is designed to preserve rows rather than discard records unnecessarily.
 
-### 4️⃣ **Data Cleaning** ✨
-- Standardize column names (lowercase, underscores)
-- Strategic missing value handling (non-destructive):
-  - Categorical → 'Unknown'
-  - Numeric → 'Not Rated' / '0'
-- Convert date_added to datetime format
-- Extract year_added & month_added
-- **Result:** 0 nulls, 100% data retention
+### 2. Feature Engineering
 
-### 5️⃣ **Feature Engineering**
-Created **9 meaningful features**:
-- `is_movie` – Binary indicator (Movie=1, TV Show=0)
-- `primary_country` – First country from list
-- `primary_genre` – First genre from list
-- `content_age` – Years between release and Netflix addition
-- `duration_num` – Numeric duration value
-- `movie_duration_min` – Duration in minutes (movies)
-- `tv_seasons` – Number of seasons (TV shows)
-- `release_decade` – Decade categorization
-- `year_added`, `month_added` – Temporal features
+The second notebook creates modeling and analysis features, including temporal fields, content duration measures, primary country and genre extraction, and derived indicators for movie versus TV-show structure. Numerical features are also scaled for modeling.
 
-**Total Features:** 12 → **21 (75% increase)**
+### 3. Exploratory Data Analysis
 
-### 6️⃣ **Exploratory Data Analysis**
-**10 Comprehensive Analyses:**
-1. Content type distribution (Movies vs TV Shows)
-2. Growth trends over years
-3. Comparative growth (Movies vs TV Shows)
-4. Top 15 countries by content
-5. Movie duration distribution
-6. TV show seasons distribution
-7. Content ratings frequency
-8. Top genres/categories
-9. Prolific actors
-10. Comedy content analysis
+The third notebook explores catalog composition and content trends through visual analysis of:
 
-### 7️⃣ **Data Export**
-- Excel export: `netflix_cleaned_data.xlsx` (2.3 MB)
-- All 21 engineered features preserved
-- Ready for business intelligence tools
+- title type distribution
+- release and addition trends
+- country distribution
+- rating patterns
+- duration patterns
+- genre composition
+- actor frequency
 
-### 8️⃣ **Database Integration**
-- Create SQLite database: `netflix_analysis.db`
-- Store processed data in relational format
-- Execute sample queries for verification
-- Enable SQL-based analysis
+### 4. SQLite Persistence
 
-### 9️⃣ **Machine Learning** ⭐
-**Content Type Prediction Model (Movie vs TV Show)**
+The fourth notebook writes the curated dataset to SQLite so it can be queried with SQL and used as a structured analytical asset.
 
-**Enhancements Applied:**
-- ✅ Advanced encoder with mapping dictionaries
-- ✅ StandardScaler for feature scaling
-- ✅ Optimized Logistic Regression parameters
-- ✅ Balanced class weighting
+### 5. Machine Learning
 
-**Performance:**
-```
-Accuracy:  99.48% ✅
-Precision: 99.49%
-Recall:    99.48%
-F1-Score:  99.48%
-AUC:       99.97%
-```
+The fifth notebook trains and compares three classifier families:
 
----
-
-## 📊 Key Findings
-
-### Content Distribution
-- **Movies:** 6,131 (69.6%) 🎬
-- **TV Shows:** 2,676 (30.4%) 📺
-- **Ratio:** 2.3:1 in favor of movies
-
-### Growth Trends
-- **Pre-2015:** Slow, steady growth
-- **2015-2019:** Exponential growth (spike in 2019)
-- **2020-2021:** Continued growth, slight moderation
-
-### Geographic Insights
-| Country | Count | % |
-|---------|-------|---|
-| United States | 3,211 | 36.5% |
-| India | 1,010 | 11.5% |
-| United Kingdom | 419 | 4.8% |
-| Canada | 383 | 4.3% |
-| Japan | 246 | 2.8% |
-
-### Duration Patterns
-- **Movies:** Average ~100 minutes (80-120 most common)
-- **TV Shows:** Most have 1-3 seasons
-- **Distribution:** Normal for movies, right-skewed for TV
-
-### Popular Genres
-1. Drama (2,416 titles)
-2. International (1,500)
-3. Comedy (1,243)
-4. Action (939)
-5. Thriller (853)
-
----
-
-## 💻 Technical Stack
-
-**Language & Libraries:**
-- Python 3.7+
-- **Data:** pandas, numpy
-- **Visualization:** matplotlib, seaborn
-- **Machine Learning:** scikit-learn
-- **Database:** sqlite3
-- **Environment:** Jupyter Notebook
-
-**Tools & Techniques:**
-- Data cleaning & preprocessing
-- Feature engineering
-- EDA with 10+ visualizations
-- Categorical encoding
-- Feature scaling (StandardScaler)
-- Train-test split (80-20)
 - Logistic Regression
-- Model evaluation & metrics
+- Random Forest
+- XGBoost
 
----
+Each model is evaluated in baseline and tuned form. The best-performing tuned XGBoost result produces a perfect confusion matrix on the evaluated split, with 548 true negatives and 1,214 true positives.
 
-## 📋 Installation & Usage
+## Repository Structure
 
-### Prerequisites
-```bash
-Python 3.7 or higher
-pip package manager
+```text
+Netflix-Content-Classifier/
+├── data/
+│   ├── bronze/   # Raw source data
+│   ├── silver/   # Cleaned dataset
+│   └── gold/     # Feature-engineered dataset
+├── database/     # SQLite database
+├── model_images/ # Saved evaluation plots
+├── models/       # Serialized model artifacts
+├── notebook/     # Project notebooks
+├── requirements.txt
+├── setup.py
+└── README.md
 ```
 
-### Installation
-```bash
-# Clone/download the project
-cd "Project of Data Analyst"
+## Notebook Breakdown
 
-# Install dependencies
+- `01_Data_Inspection_&_Cleaning.ipynb` - initial inspection, missing value handling, type normalization, and clean export.
+- `02_Feature_Engineering.ipynb` - feature extraction, scaling, and model-ready dataset preparation.
+- `03_EDA.ipynb` - distribution analysis, trend analysis, and visualization.
+- `04_sqlite3.ipynb` - loading the processed data into SQLite and validating the persisted output.
+- `05_ML.ipynb` - model training, tuning, evaluation, and artifact export.
+
+## Deliverables
+
+The repository includes the following generated outputs:
+
+- Cleaned CSV in the silver layer.
+- Feature-engineered and scaled CSV in the gold layer.
+- SQLite database for relational analysis.
+- Serialized logistic regression, random forest, and XGBoost models.
+- Confusion matrix and ROC curve plots for baseline and tuned models.
+- Feature importance visualization for XGBoost.
+
+## Technology Stack
+
+- Python
+- pandas
+- numpy
+- matplotlib
+- seaborn
+- scikit-learn
+- xgboost
+- sqlite3
+- Jupyter Notebook
+
+## Installation
+
+```bash
 pip install -r requirements.txt
-
-# Open notebook
-jupyter notebook main.ipynb
 ```
 
-### Running the Analysis
-1. Open `main.ipynb` in Jupyter
-2. Run cells sequentially (Step 1-10)
-3. View outputs and visualizations
-4. Generated files appear in folder:
-   - `netflix_cleaned_data.xlsx`
-   - `netflix_analysis.db`
+For editable local development:
 
----
+```bash
+pip install -e .
+```
 
-## 🎓 Skills Demonstrated
+## How to Run
 
-✅ **Data Engineering**
-- Data cleaning (non-destructive approach)
-- Missing value handling
-- Data type conversion
+1. Open the notebooks in the `notebook/` folder.
+2. Execute them in order, beginning with data inspection and cleaning.
+3. Review the generated artifacts in `data/silver/`, `data/gold/`, `database/`, `models/`, and `model_images/`.
 
-✅ **Feature Engineering**
-- Creating meaningful features (9 new)
-- Domain knowledge application
-- Feature extraction techniques
+## Reproducibility Notes
 
-✅ **Exploratory Data Analysis**
-- Statistical analysis
-- Multiple perspectives
-- Data visualization
-- Insight extraction
+- The repository is designed to be run notebook-by-notebook.
+- Generated artifacts are already present in the repository for convenience.
+- `requirements.txt` is intentionally minimal and aligned with the notebook workflow.
+- `setup.py` supports editable installation for local experimentation.
 
-✅ **Machine Learning**
-- Model building
-- Feature preprocessing
-- Model evaluation
-- Hyperparameter optimization
+## Author
 
-✅ **Database Management**
-- SQLite integration
-- Relational data modeling
-- SQL queries
-
-✅ **Data Visualization**
-- matplotlib & seaborn
-- Multiple plot types
-- Professional styling
-
-✅ **Professional Practices**
-- Code organization
-- Documentation
-- Best practices
-- Version control
-
----
-
-## 📈 Performance Summary
-
-### Data Quality
-- **Records Retained:** 8,807/8,807 (100%)
-- **Null Values Handled:** 31,427
-- **Features Created:** 9 new features
-- **Data Loss:** 0%
-
-### Model Performance
-- **Test Accuracy:** 99.48%
-- **Training Accuracy:** 99.53%
-- **Misclassifications:** 9 out of 1,742 (0.52%)
-- **Balanced Performance:** Equal on both classes
-
-### Deliverables
-- ✅ Clean, documented notebook (92 cells)
-- ✅ Processed Excel export (2.3 MB)
-- ✅ SQLite database (3.9 MB)
-- ✅ Comprehensive documentation
-
----
-
-## 🔍 Files Description
-
-| File | Size | Purpose |
-|------|------|---------|
-| **main.ipynb** | 540 KB | Complete analysis (92 cells) |
-| **netflix_titles.csv** | 3.2 MB | Raw dataset |
-| **netflix_cleaned_data.xlsx** | 2.3 MB | Processed data for BI tools |
-| **netflix_analysis.db** | 3.9 MB | SQLite database |
-| **README.md** | - | Project overview |
-| **Project_Report.pdf** | - | Detailed technical report |
-| **requirements.txt** | - | Python packages |
-
----
-
-## 🎯 Use Cases
-
-This project can be used for:
-- **Portfolio Showcase** – Demonstrates complete data science skills
-- **Learning Resource** – Step-by-step pipeline example
-- **Production Blueprint** – Template for real-world projects
-- **Business Intelligence** – Netflix content analysis insights
-
----
-
-## 🚀 Next Steps
-
-### Enhancement Ideas:
-1. **Deploy as Dashboard** – Streamlit/Power BI visualization
-2. **Advanced ML** – Random Forest, XGBoost comparison
-3. **Cross-Validation** – k-fold validation for robustness
-4. **API Service** – REST API for predictions
-5. **Real-time Pipeline** – Automated data updates
-
----
-
-##  Acknowledgments
-
-- Netflix dataset from public data sources
-- Python open-source community
-- Jupyter Notebook platform
-
----
-
-## 📝 Tips for Success
-
-1. **Run sequentially:** Execute cells in order (don't skip steps)
-2. **Check outputs:** Verify each step produces expected results
-3. **Ask questions:** Understand why each step is important
-4. **Experiment:** Modify parameters and see effects
-5. **Document:** Take notes on key findings
-
----
-
-**Happy Analyzing! 🎬📊**
+Vaibhav Mangla
