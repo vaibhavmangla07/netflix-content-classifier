@@ -4,6 +4,5 @@ __pycache__/
 .ipynb_checkpoints/
 *.log
 *.tmp
-main.ipynb
 netflix_data_science_project.egg-info
 .env
