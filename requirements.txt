@@ -3,6 +3,5 @@ numpy
 matplotlib
 seaborn
 scikit-learn
-openpyxl
-python-dotenv
+xgboost
 -e .
