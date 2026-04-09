@@ -5,3 +5,5 @@ __pycache__/
 *.log
 *.tmp
 INTERVIEW_QA.md
+netflix_data_science_project.egg-info
+.env
